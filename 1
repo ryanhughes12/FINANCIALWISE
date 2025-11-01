@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Startup Budget & Reinvestment Planner</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <h1 class="logo">Startup Planner</h1>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#tool">Planner</a></li>
+          <li><a href="#about">About</a></li>
+          <li><button id="themeToggle" aria-label="Toggle dark mode">🌓</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Plan. Reinvest. Grow.</h2>
+      <p>
+        A simple, smart financial planning tool for startups — forecast your
+        revenue, manage expenses, and decide where to reinvest profits.
+      </p>
+      <a href="#tool" class="btn btn-primary">Try It Now</a>
+    </div>
+    <img
+      class="hero-img"
+      src="https://i.postimg.cc/your-hero-image.jpg"
+      alt="Startup founders reviewing charts"
+    />
+  </section>
+
+  <section id="features" class="features">
+    <h2>Key Features</h2>
+    <div class="feature-grid">
+      <div class="feature">
+        <img src="https://i.postimg.cc/your-icon1.jpg" alt="Budget Icon" />
+        <h3>Smart Budgeting</h3>
+        <p>Input your numbers and instantly see profits and reinvestment projections.</p>
+      </div>
+      <div class="feature">
+        <img src="https://i.postimg.cc/your-icon2.jpg" alt="Analytics Icon" />
+        <h3>Visual Analytics</h3>
+        <p>Interactive charts to help you understand growth and spending trends.</p>
+      </div>
+      <div class="feature">
+        <img src="https://i.postimg.cc/your-icon3.jpg" alt="Reinvestment Icon" />
+        <h3>Reinvestment Strategy</h3>
+        <p>Receive AI-assisted suggestions on how to allocate profits wisely.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="tool" class="planner">
+    <h2>Budget & Reinvestment Planner</h2>
+    <p>Enter your monthly figures and see how reinvesting can drive your growth.</p>
+
+    <div class="planner-card">
+      <form id="budgetForm">
+        <label>Monthly Revenue (€)
+          <input type="number" id="revenue" value="10000" min="0" />
+        </label>
+        <label>Fixed Monthly Costs (€)
+          <input type="number" id="fixedCosts" value="4000" min="0" />
+        </label>
+        <label>Variable Monthly Costs (€)
+          <input type="number" id="variableCosts" value="2000" min="0" />
+        </label>
+        <label>Reinvestment % of Profit <output id="reinvestOut">30%</output>
+          <input type="range" id="reinvestPct" min="0" max="100" value="30" />
+        </label>
+        <button type="submit" class="btn btn-primary">Calculate</button>
+        <button type="button" id="downloadBtn" class="btn btn-secondary">Download CSV</button>
+      </form>
+
+      <div id="results" class="results">
+        <div id="summary"></div>
+        <div id="allocations"></div>
+        <canvas id="cashflowChart" width="600" height="220"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <h2>About This Project</h2>
+    <p>
+      This prototype was built using AI-assisted coding tools to demonstrate how
+      startups can use technology to make smarter reinvestment decisions. All
+      code is lightweight, responsive, and hosted on GitHub Pages.
+    </p>
+  </section>
+
+  <footer>
+    <p>© 2025 Startup Planner | Built with AI-Assisted Development</p>
+  </footer>
+</body>
+</html>
+:root {
+  --primary: #2563eb;
+  --secondary: #f97316;
+  --bg: #f9fafb;
+  --text: #111827;
+  --muted: #6b7280;
+  --card: #ffffff;
+  --radius: 12px;
+  --transition: 0.3s ease;
+}
+
+body.dark {
+  --bg: #111827;
+  --text: #f9fafb;
+  --card: #1e293b;
+  --muted: #94a3b8;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background var(--transition), color var(--transition);
+}
+
+/* Navbar */
+.navbar {
+  background: var(--card);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.nav-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  color: var(--primary);
+  font-weight: 700;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+}
+.nav-links a:hover {
+  color: var(--primary);
+}
+#themeToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+/* Hero */
+.hero {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.hero-content {
+  flex: 1;
+  min-width: 280px;
+}
+.hero-content h2 {
+  font-size: 2.5rem;
+  color: var(--primary);
+}
+.hero-content p {
+  color: var(--muted);
+  margin: 1rem 0;
+}
+.hero-img {
+  flex: 1;
+  max-width: 420px;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+.btn-primary:hover {
+  background: #1e40af;
+}
+.btn-secondary {
+  background: var(--secondary);
+  color: white;
+}
+.btn-secondary:hover {
+  background: #ea580c;
+}
+
+/* Features */
+.features {
+  background: var(--card);
+  padding: 60px 20px;
+  text-align: center;
+}
+.features h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.feature {
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+.feature img {
+  width: 60px;
+  margin-bottom: 10px;
+}
+
+/* Planner */
+.planner {
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 20px;
+  text-align: center;
+}
+.planner-card {
+  background: var(--card);
+  padding: 30px;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+  text-align: left;
+}
+label {
+  display: block;
+  margin-top: 12px;
+}
+input[type="number"],
+input[type="range"] {
+  width: 100%;
+  padding: 8px;
+  border-radius: var(--radius);
+  border: 1px solid #d1d5db;
+}
+.results {
+  margin-top: 20px;
+}
+canvas {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* About & Footer */
+.about {
+  background: var(--bg);
+  text-align: center;
+  padding: 60px 20px;
+}
+footer {
+  background: var(--card);
+  text-align: center;
+  padding: 20px;
+  color: var(--muted);
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("budgetForm");
+  const reinvestEl = document.getElementById("reinvestPct");
+  const reinvestOut = document.getElementById("reinvestOut");
+  const summary = document.getElementById("summary");
+  const allocations = document.getElementById("allocations");
+  const canvas = document.getElementById("cashflowChart");
+  const downloadBtn = document.getElementById("downloadBtn");
+  const themeToggle = document.getElementById("themeToggle");
+
+  // Dark mode toggle
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+  });
+
+  reinvestEl.addEventListener("input", () => {
+    reinvestOut.value = reinvestEl.value + "%";
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    calculate();
+  });
+
+  function calculate() {
+    const revenue = parseFloat(document.getElementById("revenue").value) || 0;
+    const fixed = parseFloat(document.getElementById("fixedCosts").value) || 0;
+    const variable = parseFloat(document.getElementById("variableCosts").value) || 0;
+    const reinvestPct = parseFloat(reinvestEl.value) / 100;
+
+    const profit = Math.max(0, revenue - fixed - variable);
+    const reinvest = profit * reinvestPct;
+    const savings = profit - reinvest;
+
+    summary.innerHTML = `
+      <h3>Summary</h3>
+      <p><strong>Monthly Profit:</strong> €${profit.toFixed(2)}</p>
+      <p><strong>Reinvestment:</strong> €${reinvest.toFixed(2)} (${(reinvestPct * 100).toFixed(0)}%)</p>
+      <p><strong>Savings:</strong> €${savings.toFixed(2)}</p>
+    `;
+
+    const allocs = [
+      { name: "R&D", pct: 0.4 },
+      { name: "Marketing", pct: 0.35 },
+      { name: "Hiring", pct: 0.15 },
+      { name: "Tools", pct: 0.1 },
+    ];
+    allocations.innerHTML = `
+      <h3>Suggested Reinvestment Allocation</h3>
+      <ul>${allocs
+        .map(
+          (a) =>
+            `<li>${a.name}: €${(reinvest * a.pct).toFixed(2)} (${(a.pct * 100).toFixed(
+              0
+            )}%)</li>`
+        )
+        .join("")}</ul>
+    `;
+
+    drawChart([profit, reinvest, savings]);
+  }
+
+  function drawChart(values) {
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const labels = ["Profit", "Reinvest", "Savings"];
+    const max = Math.max(...values);
+    const barWidth = 100;
+    labels.forEach((label, i) => {
+      const height = (values[i] / max) * (canvas.height - 50);
+      const x = 100 + i * (barWidth + 100);
+      ctx.fillStyle = "#2563eb";
+      ctx.fillRect(x, canvas.height - height - 30, barWidth, height);
+      ctx.fillStyle = "#000";
+      ctx.fillText(label, x + 20, canvas.height - 10);
+      ctx.fillText("€" + values[i].toFixed(0), x + 10, canvas.height - height - 40);
+    });
+  }
+
+  downloadBtn.addEventListener("click", () => {
+    const rows = [
+      ["Metric", "Value"],
+      ["Revenue", document.getElementById("revenue").value],
+      ["Fixed Costs", document.getElementById("fixedCosts").value],
+      ["Variable Costs", document.getElementById("variableCosts").value],
+      ["Reinvest %", reinvestEl.value],
+    ];
+    const csv = rows.map((r) => r.join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "budget-summary.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+});
